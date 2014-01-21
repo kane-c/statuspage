@@ -8,7 +8,8 @@ Setup
 2. Install the required packages with pip for your environment: e.g. `pip install requirements/production.txt`
 3. Install the supplied configs (assumes using uwsgi and nginx on an EC2 instance). Adjust as required.
 4. Copy `status/settings/production.py.dist` to `status/settings/production.py` and fill it out.
-5. Compile the stylesheet (using Stylus).
+5. Copy `templates/_base.html.dist` to `templates/_base.html` and edit if desired.
+6. Compile the stylesheet (using Stylus).
 
 Use
 ===
