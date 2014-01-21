@@ -34,10 +34,12 @@
         </div>
     {% endif %}
 
-    <h2>System metrics</h2>
-    {% for chart in charts %}
-        <div class="chart">{{ chart.html|safe }}</div>
-    {% endfor %}
+    {% if charts %}
+        <h2>System metrics</h2>
+        {% for chart in charts %}
+            <div class="chart">{{ chart.html|safe }}</div>
+        {% endfor %}
+    {% endif %}
 
     <h2>Past incidents</h2>
     <div class="incidents">
