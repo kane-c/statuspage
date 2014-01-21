@@ -26,11 +26,14 @@ def index(request):
     for date in dates:
         incidents_grouped[date] = [i for i in incidents if i.datetime_created.date() == date]
 
-    components = Component.objects.all()
+    components = [Component.objects.all()[0]]
 
     charts = Chart.objects.all()
 
-    problem = max(*[p.status for p in components])
+    if len(components) == 1:
+        problem = components[0].status
+    else:
+        problem = max(*[p.status for p in components])
 
     return render(request, 'status/index.html', {
         'charts': charts,
