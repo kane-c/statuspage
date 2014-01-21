@@ -1,0 +1,72 @@
+{% extends '_base.html' %}
+{% load markdown %}
+{% block title %}Service status{% endblock %}
+{% block content %}
+    <h1>Service status</h1>
+
+    {% if problem == 1 %}
+        <div class="alert alert-info">
+            Degraded performance
+        </div>
+    {% elif problem == 2 %}
+        <div class="alert alert-warning">
+            Partial outage
+        </div>
+    {% elif problem == 3 %}
+        <div class="alert alert-danger">
+            Major outage
+        </div>
+    {% else %}
+        <div class="alert alert-success">
+            All systems operational
+        </div>
+    {% endif %}
+
+    {% if components %}
+        <div class="components">
+            {% for component in components %}
+                <div class="component">
+                    {{ component }}
+
+                    <span class="pull-right text-{{ component.get_status_class }}">{{ component.get_status_display }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h2>System metrics</h2>
+    {% for chart in charts %}
+        <div class="chart">{{ chart.html|safe }}</div>
+    {% endfor %}
+
+    <h2>Past incidents</h2>
+    <div class="incidents">
+        {% for date, items in dates.items %}
+            <h3 class="date h4">{{ date|date:'M d, Y' }}</h3>
+
+            {% if items %}
+                {% for item in items %}
+                    <h4><a href="{{ item.get_absolute_url }}">{{ item }}</a></h4>
+                    {% with item.status_updates.all as status_updates %}
+                        {% for status in status_updates %}
+                            {% if status_updates|length == 1 %}
+                                {{ status.description|markdown }}
+                            {% else %}
+                                {{ status.full_description|markdown }}
+                            {% endif %}
+
+                            <p class="text-muted">
+                                {{ status.datetime_created|date:'G:i T' }}</p>
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            {% else %}
+                <span class="text-muted">No incidents reported{% if date|date == today|date %} today{% endif %}.</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <a href="{% url 'history' %}">← Incident history</a>
+{% endblock %}

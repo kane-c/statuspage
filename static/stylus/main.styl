@@ -1,0 +1,57 @@
+@charset "UTF-8"
+
+@import "vendor/bootstrap/bootstrap"
+@import "vendor/font-awesome"
+
+body
+  padding 20px 0
+
+h2, .h2
+  margin-bottom 40px
+
+.components
+  border 1px solid $gray-lighter
+  border-radius $border-radius-base
+
+.component
+  border-top 1px solid $gray-lighter
+  padding 20px
+
+  &:first-child
+    border-top 0
+
+.chart
+  text-align center
+
+  iframe
+    margin 0 auto
+
+.date
+  border-bottom 1px solid $gray-lighter
+  margin-top 40px
+  margin-bottom 20px
+  padding-bottom 5px
+
+  &:first-child
+    margin-top 0
+
+.status-update
+  margin-top 20px
+
+.status-update-type
+  margin 0
+
+.incident-name
+  margin 0 0 5px 0
+
+  a
+    color inherit
+
+.history-date
+  margin 5px 0 0 0
+
+.history-month
+  margin 40px 0 10px
+
+.history-date + .incident-name
+  margin-top 20px

@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% block title %}Incident history{% endblock %}
+{% block content %}
+    {% for date, incidents in object_list.iteritems %}
+        <h1 class="history-month date h2">{{ date|date:'F Y' }}</h1>
+        {% if incidents %}
+            {% for object in incidents %}
+                <h2 class="incident-name h4"><a href="{{ object.get_absolute_url }}">{{ object }}</a></h2>
+                {% with object.status_updates.all.0 as status %}
+                    {{ status.description|truncatechars:100 }}
+                {% endwith %}
+                <p class="history-date text-muted">{{ object.date_range}}</p>
+            {% endfor %}
+        {% else %}
+            <span class="text-muted">No incidents reported for this month.</span>
+        {% endif %}
+    {% endfor %}
+
+    <hr>
+
+    <a href="/">← Current status</a>
+{% endblock %}

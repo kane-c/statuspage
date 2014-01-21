@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+{% load markdown %}
+{% block title %}{{ object }}{% endblock %}
+{% block content %}
+    <div class="text-center">
+        <h1>{{ object }}</h1>
+        <h2 class="text-muted">Incident report for {{ brand_name }}</h2>
+    </div>
+
+    {% for status in object.status_updates.all %}
+        <div class="row status-update">
+            <div class="col-lg-3">
+                <h3 class="status-update-type h4">{{ status }}</h3>
+            </div>
+            <div class="col-lg-9">
+                {{ status.description|markdown }}
+                <p class="text-muted">
+                    Posted {{ status.datetime_created|timesince }} ago. {{ status.datetime_created|date:'M d, Y - G:i T' }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <hr>
+
+    <a href="/">← Current status</a>
+{% endblock %}
